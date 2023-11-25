@@ -12,7 +12,7 @@ export const GET = async (req: Request) => {
     const _choices = await db
     .select()
     .from(choices);
-    console.log(_choices)
+
     return NextResponse.json(_choices);
   } catch (error) {
     console.log(error, "Fetching Choices is going wrong")

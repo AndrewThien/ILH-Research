@@ -76,7 +76,7 @@ export default function Page() {
     }
   };
 
-  const handleAnswerSelection = (index) => {
+  const handleAnswerSelection = (index: number) => {
       // Get the current question and its category
 
   const currentQuestion = questions[activeQuestion];

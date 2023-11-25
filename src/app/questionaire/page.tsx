@@ -14,10 +14,11 @@ export default function Page() {
   }
 
   interface Question {
+    id: number;
     questions: string;
     category: number;
   }
-  
+
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [choices, setChoices] = useState<Choice[]>([]);

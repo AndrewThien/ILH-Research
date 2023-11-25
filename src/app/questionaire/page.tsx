@@ -8,7 +8,7 @@ import { Loader2 } from 'lucide-react';
 
 export default function Page() {
   interface Choice {
-    question_id: string;
+    question_id: number;
     choice: string;
     score: number;
   }

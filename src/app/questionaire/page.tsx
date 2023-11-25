@@ -30,6 +30,10 @@ export default function Page() {
   const [countCat1, setCountCat1] = useState(0);
   const [countCat2, setCountCat2] = useState(0);
   const [countCat3, setCountCat3] = useState(0);
+  const [avgCat1, setAvgCat1] = useState(0);
+  const [avgCat2, setAvgCat2] = useState(0);
+  const [avgCat3, setAvgCat3] = useState(0);
+  const [avg, setAvg] = useState(0);
 
   const [showFinalPage, setShowFinalPage] = useState(false);
 
@@ -95,8 +99,13 @@ export default function Page() {
     setSelectedAnswerIndex(index);
   };
 
-  const insertDataToDatabase = async (avgCat1: number, avgCat2: number, avgCat3: number, avg: number) => {
+  const insertDataToDatabase = async () => {
     try {
+    setAvgCat1(sumCat1 / countCat1);
+    setAvgCat2(sumCat2 / countCat2);
+    setAvgCat3(sumCat3 / countCat3);
+    setAvg((sumCat1 + sumCat2 + sumCat3) / (countCat1 + countCat2 + countCat3));
+
       const response = await fetch('/api/insertData', {
         method: 'POST',
         headers: {
@@ -121,12 +130,7 @@ export default function Page() {
   };
 
   if (showFinalPage) {
-    insertDataToDatabase(
-      sumCat1/countCat1,
-      sumCat2/countCat2,
-      sumCat3/countCat3,
-      (sumCat1 + sumCat2 + sumCat3)/(countCat1 + countCat2 + countCat3),
-    )
+    insertDataToDatabase()
   }
 
   return (

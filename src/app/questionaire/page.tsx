@@ -7,7 +7,17 @@ import { Loader2 } from 'lucide-react';
 
 
 export default function Page() {
+  interface Choice {
+    question_id: string;
+    choice: string;
+    score: number;
+  }
 
+  interface Question {
+    questions: string;
+    category: number;
+  }
+  
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [choices, setChoices] = useState<Choice[]>([]);

@@ -87,13 +87,13 @@ export default function Page() {
 
   // Update the sum variables based on the category
   if (currentCategory === 1) {
-    setSumCat1((prevSum) => prevSum + selectedChoice.score);
+    setSumCat1((prevSum) => Number(prevSum) + selectedChoice.score);
     console.log(sumCat1)
   } else if (currentCategory === 2) {
-    setSumCat2((prevSum) => prevSum + selectedChoice.score);
+    setSumCat2((prevSum) => Number(prevSum) + selectedChoice.score);
     console.log(sumCat2)
   } else if (currentCategory === 3) {
-    setSumCat3((prevSum) => prevSum + selectedChoice.score);
+    setSumCat3((prevSum) => Number(prevSum) + selectedChoice.score);
     console.log(sumCat3)
   }
     setSelectedAnswerIndex(index);

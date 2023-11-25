@@ -7,22 +7,18 @@ export const runtime = 'edge';
 
 export const POST = async (req: Request) => {
   try {
-    const { userID } = await auth()
+    const {userId} = await auth()
     const { avgCat1, avgCat2, avgCat3, avg } = req.body;
-
+    console.log(userId)
     // Insert the values into the "users" table
-    await db.insert({
-      into: users,
-      values: [
-        {
-        user_id: userID,
-        cat1: avgCat1,
-        cat2: avgCat2,
-        cat3: avgCat3,
-        avg: avg
-        },
-      ],
-    });
+    await db.insert(users).values({
+        user_id: userId,
+        category_1: avgCat1,
+        category_2: avgCat2,
+        category_3: avgCat3,
+        average_score: avg
+        })
+
     return NextResponse.json({ message: 'Data inserted successfully.' });
   } catch (error) {
     console.error('Error inserting data:', error);

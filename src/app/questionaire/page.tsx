@@ -9,8 +9,8 @@ import { Loader2 } from 'lucide-react';
 export default function Page() {
 
   const [loading, setLoading] = useState(true);
-  const [questions, setQuestions] = useState([]);
-  const [choices, setChoices] = useState([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [choices, setChoices] = useState<Choice[]>([]);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
   const [sumCat1, setSumCat1] = useState(0);
@@ -44,9 +44,8 @@ export default function Page() {
     return <Loader2 className='spin' />;
   }
 
-
   const currentQuestion = questions[activeQuestion];
-  const currentChoices = choices.filter(choice => choice.question_id === currentQuestion.id);
+  const currentChoices = choices?.filter(choice => choice.question_id === currentQuestion.id);
 
   const handleNextQuestion = () => {
     // Check if an answer is selected before proceeding to the next question

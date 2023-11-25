@@ -27,6 +27,9 @@ export default function Page() {
   const [sumCat1, setSumCat1] = useState(0);
   const [sumCat2, setSumCat2] = useState(0);
   const [sumCat3, setSumCat3] = useState(0);
+  const [countCat1, setCountCat1] = useState(0);
+  const [countCat2, setCountCat2] = useState(0);
+  const [countCat3, setCountCat3] = useState(0);
 
   const [showFinalPage, setShowFinalPage] = useState(false);
 
@@ -35,10 +38,8 @@ export default function Page() {
       try {
         const questionsResponse = await fetch('/api/questions', {cache: 'no-cache'});
         const choicesResponse = await fetch('/api/choices', {cache: 'no-cache'});
-
         const questionsData = await questionsResponse.json();
         const choicesData = await choicesResponse.json();
-
         setQuestions(questionsData);
         setChoices(choicesData);
         setLoading(false); // Set loading to false when data is loaded
@@ -54,13 +55,26 @@ export default function Page() {
   if (loading) {
     return <Loader2 className='spin' />;
   }
-
   const currentQuestion = questions[activeQuestion];
+  const currentCategory = currentQuestion.category;
   const currentChoices = choices?.filter(choice => choice.question_id === currentQuestion.id);
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = (index: number) => {
     // Check if an answer is selected before proceeding to the next question
     if (selectedAnswerIndex !== null) {
+      // Get the selected choice
+      const selectedChoice = choices.filter((choice) => choice.question_id === currentQuestion.id)[index];
+        // Update the sum variables based on the category
+      if (currentCategory === 1) {
+        setSumCat1((prevSum) => Number(prevSum) + Number(selectedChoice.score));
+        setCountCat1((prevCount) => Number(prevCount) + 1);
+      } else if (currentCategory === 2) {
+        setSumCat2((prevSum) => Number(prevSum) + Number(selectedChoice.score));
+        setCountCat2((prevCount) => Number(prevCount) + 1);
+      } else if (currentCategory === 3) {
+        setSumCat3((prevSum) => Number(prevSum) + Number(selectedChoice.score));
+        setCountCat3((prevCount) => Number(prevCount) + 1);
+      }
       // Update state to move to the next question
       if (activeQuestion !== questions.length - 1) {
         setActiveQuestion((prev) => prev + 1);
@@ -77,27 +91,43 @@ export default function Page() {
   };
 
   const handleAnswerSelection = (index: number) => {
-      // Get the current question and its category
-
-  const currentQuestion = questions[activeQuestion];
-  const currentCategory = currentQuestion.category;
-
-  // Get the selected choice
-  const selectedChoice = choices.filter((choice) => choice.question_id === currentQuestion.id)[index];
-
-  // Update the sum variables based on the category
-  if (currentCategory === 1) {
-    setSumCat1((prevSum) => Number(prevSum) + selectedChoice.score);
-    console.log(sumCat1)
-  } else if (currentCategory === 2) {
-    setSumCat2((prevSum) => Number(prevSum) + selectedChoice.score);
-    console.log(sumCat2)
-  } else if (currentCategory === 3) {
-    setSumCat3((prevSum) => Number(prevSum) + selectedChoice.score);
-    console.log(sumCat3)
-  }
+      // Get the current question and its category  
     setSelectedAnswerIndex(index);
   };
+
+  const insertDataToDatabase = async (avgCat1: number, avgCat2: number, avgCat3: number, avg: number) => {
+    try {
+      const response = await fetch('/api/insertData', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          avgCat1,
+          avgCat2,
+          avgCat3,
+          avg,
+        }),
+      });
+  
+      if (response.ok) {
+        console.log('Data inserted successfully.');
+      } else {
+        console.error('Error inserting data:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error inserting data:', error.message);
+    }
+  };
+
+  if (showFinalPage) {
+    insertDataToDatabase(
+      sumCat1/countCat1,
+      sumCat2/countCat2,
+      sumCat3/countCat3,
+      (sumCat1 + sumCat2 + sumCat3)/(countCat1 + countCat2 + countCat3),
+    )
+  }
 
   return (
     <div>
@@ -127,9 +157,9 @@ export default function Page() {
                     </div>
                   ))}
               </div>
-              <button onClick={handleNextQuestion}>Next</button>
+              <button onClick={() => handleNextQuestion(selectedAnswerIndex)}>Next</button>
             </>
-          ): (          
+          ): ( 
             <div>
               <h2>Sum Category 1: {sumCat1}</h2>
               <h2>Sum Category 2: {sumCat2}</h2>

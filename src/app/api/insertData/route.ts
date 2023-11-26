@@ -7,7 +7,7 @@ export const runtime = 'edge';
 
 export const POST = async (req: Request) => {
   try {
-    const {userId} = await auth() as string;
+    const { userId } : { userId: string } = auth();
     const body = await req.json();
     const { avgCat1, avgCat2, avgCat3 } = body;
     // Insert the values into the "users" table

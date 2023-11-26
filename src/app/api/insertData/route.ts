@@ -16,7 +16,6 @@ export const POST = async (req: Request) => {
 
     // Insert the values into the "users" table
     await db.insert(users).values({
-      user_id: userId,
       cat1: cat1Value,
       cat2: cat2Value,
       cat3: cat3Value,

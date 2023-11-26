@@ -23,7 +23,7 @@ export default function Page() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [choices, setChoices] = useState<Choice[]>([]);
   const [activeQuestion, setActiveQuestion] = useState(0);
-  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number>(0);
   const [sumCat1, setSumCat1] = useState(0);
   const [sumCat2, setSumCat2] = useState(0);
   const [sumCat3, setSumCat3] = useState(0);

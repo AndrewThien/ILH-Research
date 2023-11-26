@@ -1,10 +1,10 @@
 'use client';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, SetStateAction } from 'react';
 
 export default function SeeResult() {
   const [password, setPassword] = useState('');
   const [userData, setUserData] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -15,7 +15,8 @@ export default function SeeResult() {
       const userResponse = await fetch('/api/users', { cache: 'no-cache' });
       const userData = await userResponse.json();
       setUserData(userData);
-    } catch (error: any) {
+      setError(null); // Clear any previous errors on successful fetch
+    } catch (error) {
       console.error('Error getting user data:', error.message);
       setError('Error getting user data. Please try again.');
     }

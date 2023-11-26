@@ -10,12 +10,18 @@ export const POST = async (req: Request) => {
     const body = await req.json();
     const { avgCat1, avgCat2, avgCat3 } = body;
     // Insert the values into the "users" table
+    const cat1Value = avgCat1 !== null ? avgCat1 : '';  // Adjust this accordingly
+    const cat2Value = avgCat2 !== null ? avgCat2 : '';  // Adjust this accordingly
+    const cat3Value = avgCat3 !== null ? avgCat3 : '';  // Adjust this accordingly
+
+    // Insert the values into the "users" table
     await db.insert(users).values({
-        cat1: avgCat1,
-        cat2: avgCat2,
-        cat3: avgCat3,
-        avg: (avgCat1 + avgCat2 + avgCat3)
-        })
+      user_id: userId,
+      cat1: cat1Value,
+      cat2: cat2Value,
+      cat3: cat3Value,
+      avg: cat1Value + cat2Value + cat3Value,
+    });
 
     return NextResponse.json({ message: 'Data inserted successfully.' });
   } catch (error) {

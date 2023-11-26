@@ -1,12 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 export default function SeeResult() {
   const [password, setPassword] = useState('');
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
@@ -15,7 +15,7 @@ export default function SeeResult() {
       const userResponse = await fetch('/api/users', { cache: 'no-cache' });
       const userData = await userResponse.json();
       setUserData(userData);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error getting user data:', error.message);
       setError('Error getting user data. Please try again.');
     }
@@ -32,9 +32,6 @@ export default function SeeResult() {
 
   return (
     <div>
-        <div className="w-screen min-h-screen bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 ">
-      <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-        <div className='flex flex-col items-center text-center'>
       <h1>See Result Page</h1>
       <div>
         <label>Password:</label>
@@ -69,9 +66,6 @@ export default function SeeResult() {
           </table>
         </div>
       )}
-    </div>
-    </div>
-    </div>
     </div>
   );
 }

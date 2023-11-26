@@ -27,7 +27,7 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json({ message: 'Data inserted successfully.' });
   } catch (error) {
-    console.error('Error inserting data:', error);
+    console.error('Error inserting data:');
     return NextResponse.json(
       { error: 'Error inserting data.' },
       { status: 500 }

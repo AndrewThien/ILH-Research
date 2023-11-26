@@ -66,7 +66,7 @@ export default function Page() {
 
   const handleNextQuestion = (index: number) => {
     // Check if an answer is selected before proceeding to the next question
-    if (selectedAnswerIndex !== null) {
+    if (selectedAnswerIndex !== 0) {
       // Get the selected choice
       const selectedChoice = choices.filter((choice) => choice.question_id === currentQuestion.id)[index];
         // Update the sum variables based on the category
@@ -91,7 +91,7 @@ export default function Page() {
         setShowFinalPage(true);   
       }
       // Reset selected answer for the new question
-      setSelectedAnswerIndex(null);
+      setSelectedAnswerIndex(0);
       
     } else {
       // Provide some feedback to the user (e.g., show an error message)

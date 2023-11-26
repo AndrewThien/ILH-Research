@@ -16,7 +16,7 @@ export default function SeeResult() {
       const userData = await userResponse.json();
       setUserData(userData);
       setError(null); // Clear any previous errors on successful fetch
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error getting user data:', error.message);
       setError('Error getting user data. Please try again.');
     }

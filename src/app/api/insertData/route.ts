@@ -8,14 +8,17 @@ export const runtime = 'edge';
 export const POST = async (req: Request) => {
   try {
     const body = await req.json();
+    const {userId} = await auth();
+
     const { avgCat1, avgCat2, avgCat3 } = body;
-    // Insert the values into the "users" table
-    const cat1Value = avgCat1 !== null ? avgCat1 : 0;  // Adjust this accordingly
-    const cat2Value = avgCat2 !== null ? avgCat2 : 0;  // Adjust this accordingly
-    const cat3Value = avgCat3 !== null ? avgCat3 : 0;  // Adjust this accordingly
+    const userIdString = String(userId)
+    const cat1Value = String(avgCat1 !== null ? avgCat1 : '');
+    const cat2Value = String(avgCat2 !== null ? avgCat2 : '');
+    const cat3Value = String(avgCat3 !== null ? avgCat3 : '');
 
     // Insert the values into the "users" table
     await db.insert(users).values({
+      user_id: userIdString,
       cat1: cat1Value,
       cat2: cat2Value,
       cat3: cat3Value,

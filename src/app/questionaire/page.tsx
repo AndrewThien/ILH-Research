@@ -1,8 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { questions, choices, users } from "@/lib/db/schema";
-import { db } from "@/lib/db";
-import { eq } from "drizzle-orm";
 import { Loader2 } from 'lucide-react';
 
 

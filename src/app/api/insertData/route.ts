@@ -15,7 +15,7 @@ export const POST = async (req: Request) => {
     const cat1Value = avgCat1 !== null ? avgCat1 : 0;  // Adjust this accordingly
     const cat2Value = avgCat2 !== null ? avgCat2 : 0;  // Adjust this accordingly
     const cat3Value = avgCat3 !== null ? avgCat3 : 0;  // Adjust this accordingly
-
+    
     // Insert the values into the "users" table
     const insert = await db.insert(users).values({
       user_id: userId,

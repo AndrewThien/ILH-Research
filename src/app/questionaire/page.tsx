@@ -48,7 +48,7 @@ export default function Page() {
         setQuestions(questionsData);
         setChoices(choicesData);
         setLoading(false); // Set loading to false when data is loaded
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching data:', error);
         setLoading(false); // Set loading to false in case of an error
       }
@@ -125,7 +125,7 @@ export default function Page() {
         throw new Error('Error inserting data'); 
       }
   
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error inserting data:', error.message);
     }  
   }

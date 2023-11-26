@@ -1,9 +1,17 @@
 'use client';
 import { useState, ChangeEvent, SetStateAction } from 'react';
 
+interface UserData {
+  id: string;
+  cat1: string;
+  cat2: string;
+  cat3: string;
+  avg: string;
+}
+
 export default function SeeResult() {
   const [password, setPassword] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<UserData[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {

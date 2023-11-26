@@ -10,13 +10,18 @@ export const POST = async (req: Request) => {
     const {userId} = await auth();
     const body = await req.json();
     const { avgCat1, avgCat2, avgCat3 } = body;
+
+    const cat1Value = avgCat1 !== null ? avgCat1 : '';  
+    const cat2Value = avgCat2 !== null ? avgCat2 : '';  
+    const cat3Value = avgCat3 !== null ? avgCat3 : '';  
+
     // Insert the values into the "users" table
     await db.insert(users).values({
         user_id: userId,
-        cat1: avgCat1,
-        cat2: avgCat2,
-        cat3: avgCat3,
-        avg: (avgCat1 + avgCat2 + avgCat3)
+        cat1: cat1Value,
+        cat2: cat2Value,
+        cat3: cat3Value,
+        avg: (cat1Value + cat2Value + cat3Value)
         })
 
     return NextResponse.json({ message: 'Data inserted successfully.' });

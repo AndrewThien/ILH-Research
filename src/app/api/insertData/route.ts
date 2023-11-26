@@ -29,7 +29,7 @@ export const POST = async (req: Request) => {
   } catch (error) {
     console.error('Error inserting data:', error);
     return NextResponse.json(
-      { error: 'Error inserting data.', details: error.message },
+      { error: 'Error inserting data.' },
       { status: 500 }
     );
   }

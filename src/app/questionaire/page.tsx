@@ -12,7 +12,6 @@ export default function Page() {
     choice: string;
     score: number;
   }
-
   interface Question {
     id: number;
     questions: string;

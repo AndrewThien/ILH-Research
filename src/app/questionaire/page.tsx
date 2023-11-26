@@ -36,6 +36,7 @@ export default function Page() {
   const [avg, setAvg] = useState(0);
 
   const [showFinalPage, setShowFinalPage] = useState(false);
+  const [insertData, setInsertData] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,10 +85,14 @@ export default function Page() {
         setActiveQuestion((prev) => prev + 1);
       } else {
         setActiveQuestion(0);
-        setShowFinalPage(true);
+        setAvgCat1(sumCat1 / countCat1);
+        setAvgCat2(sumCat2 / countCat2);
+        setAvgCat3(sumCat3 / countCat3);
+        setShowFinalPage(true);   
       }
       // Reset selected answer for the new question
       setSelectedAnswerIndex(null);
+      
     } else {
       // Provide some feedback to the user (e.g., show an error message)
       console.log('Please select an answer before moving to the next question.');
@@ -101,10 +106,6 @@ export default function Page() {
 
   const insertDataToDatabase = async () => {
     try {
-    setAvgCat1(sumCat1 / countCat1);
-    setAvgCat2(sumCat2 / countCat2);
-    setAvgCat3(sumCat3 / countCat3);
-    setAvg((sumCat1 + sumCat2 + sumCat3) / (countCat1 + countCat2 + countCat3));
 
       const response = await fetch('/api/insertData', {
         method: 'POST',
@@ -112,26 +113,24 @@ export default function Page() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          avgCat1,
-          avgCat2,
-          avgCat3,
-          avg,
+          avgCat1: avgCat1,
+          avgCat2: avgCat2,
+          avgCat3: avgCat3,
         }),
       });
-  
-      if (response.ok) {
-        console.log('Data inserted successfully.');
-      } else {
-        console.error('Error inserting data:', response.statusText);
+
+      const data = await response.json();
+      console.log(data);
+      if (!response.ok) {
+        throw new Error('Error inserting data'); 
       }
+  
     } catch (error) {
       console.error('Error inserting data:', error.message);
-    }
-  };
-
-  if (showFinalPage) {
-    insertDataToDatabase()
+    }  
   }
+      
+
 
   return (
     <div>
@@ -165,9 +164,12 @@ export default function Page() {
             </>
           ): ( 
             <div>
-              <h2>Sum Category 1: {sumCat1}</h2>
-              <h2>Sum Category 2: {sumCat2}</h2>
-              <h2>Sum Category 3: {sumCat3}</h2>
+              
+              <h2>Category 1 point: {avgCat1}</h2>
+              <h2>Category 2 point: {avgCat2}</h2>
+              <h2>Category 3 point: {avgCat3}</h2>
+              <h2>Average point: {avg}</h2>
+              <button onClick={insertDataToDatabase}>Submit</button>
             </div>
           )}
         </div>

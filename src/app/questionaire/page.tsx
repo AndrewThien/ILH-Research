@@ -85,9 +85,9 @@ export default function Page() {
         setActiveQuestion((prev) => prev + 1);
       } else {
         setActiveQuestion(0);
-        setAvgCat1(sumCat1 / countCat1);
-        setAvgCat2(sumCat2 / countCat2);
-        setAvgCat3(sumCat3 / countCat3);
+        setAvgCat1(sumCat1 / countCat1 ?? 0);
+        setAvgCat2(sumCat2 / countCat2 ?? 0);
+        setAvgCat3(sumCat3 / countCat3 ?? 0);
         setShowFinalPage(true);   
       }
       // Reset selected answer for the new question

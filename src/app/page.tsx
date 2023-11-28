@@ -11,7 +11,7 @@ export default async function Home() {
   const user = await currentUser();
   const isAuth = !!userId;
 
-  const answered = getServerSideProps()
+  const answered = await getServerSideProps()
 
 
   return (

@@ -2,16 +2,37 @@
   // https://www.typescriptlang.org/tsconfig#compilerOptions
   "compilerOptions": {
     "esModuleInterop": true,
-    "lib": ["es2020"],
-    "module": "es2022",
+    "lib": [
+      "es2020"
+    ],
+    "module": "esnext",
     "preserveConstEnums": true,
     "moduleResolution": "node",
     "strict": true,
     "sourceMap": true,
     "target": "es2022",
-    "types": ["node"],
-    "outDir": "dist"
+    "types": [
+      "node"
+    ],
+    "outDir": "dist",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

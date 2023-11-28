@@ -3,12 +3,16 @@ import Link from 'next/link';
 import { UserButton } from "@clerk/nextjs";
 import { auth, currentUser } from "@clerk/nextjs";
 import { LogIn } from "lucide-react";
+import { getServerSideProps } from '@/lib/checkExistedUser';
 
 export default async function Home() {
 
   const { userId } = await auth()
   const user = await currentUser();
   const isAuth = !!userId;
+
+  const answered = getServerSideProps()
+
 
   return (
     <div className="w-screen min-h-screen bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 ">
@@ -31,18 +35,27 @@ export default async function Home() {
             <UserButton afterSignOutUrl="/"></UserButton>
           </div>
           <div className="w-full mt-4">
-            {isAuth ? (
-              <Link href='/questionnaire'>
-                <Button size={'lg'}>Get started here</Button>
-              </Link>
-            ) : (
-              <Link href="/sign-in">
-                <Button>
-                  Log in to get started
-                  <LogIn className="w-4 h-4 ml-2"></LogIn>
-                </Button>
-              </Link>
-            )}
+          <div>
+    {isAuth && answered && (  
+      <Button disabled>
+        You already answered the questionnaire
+      </Button>
+    )}
+
+    {isAuth && !answered && (
+      <Link href="/questionnaire">
+        <Button>Get started here</Button>  
+      </Link>
+    )}
+
+    {!isAuth && (
+      <Link href="/sign-in">
+        <Button>
+           Log in to get started
+        </Button>
+      </Link>
+    )}
+  </div>
             {/* Add a button to go to the seeResult page */}
             <Link href="/seeResult">
               <Button>

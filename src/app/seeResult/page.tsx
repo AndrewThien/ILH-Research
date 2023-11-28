@@ -41,6 +41,9 @@ export default function SeeResult() {
 
   return (
     <div>
+      <div className="w-screen min-h-screen bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 ">
+      <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+      <div className='flex flex-col items-center text-center'>
       <h1>See Result Page</h1>
       <div>
         <label>Password:</label>
@@ -75,6 +78,9 @@ export default function SeeResult() {
           </table>
         </div>
       )}
+    </div>
+    </div>
+    </div>
     </div>
   );
 }

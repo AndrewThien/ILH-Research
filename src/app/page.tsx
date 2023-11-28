@@ -43,7 +43,7 @@ export default async function Home() {
     )}
 
     {isAuth && !answered && (
-      <Link href="/questionnaire">
+      <Link href="/questionaire">
         <Button>Get started here</Button>  
       </Link>
     )}

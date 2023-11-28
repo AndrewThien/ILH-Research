@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs";
 interface User {
   user_id: string;
 }
+
 const { userId } = await auth()
 
 export async function getServerSideProps() {

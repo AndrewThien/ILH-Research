@@ -10,6 +10,6 @@ export async function getServerSideProps() {
     const res = await fetch(`${process.env.NEXTAUTH_URL}/api/users`);
     const data: User[] = await res.json();
     const userIds = data.map(user => user.user_id);
-    const answered = userIds.includes(userId);
+    const answered = userIds.includes(userId || '');
     return answered
   }

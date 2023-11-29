@@ -36,13 +36,13 @@ export default async function Home() {
           </div>
           <div className="w-full mt-4">
           <div>
-    {isAuth && answered && (  
+    {isAuth && (  
       <Button disabled>
         You already answered the questionnaire
       </Button>
     )}
 
-    {isAuth && !answered && (
+    {isAuth  && (
       <Link href="/questionaire">
         <Button>Get started here</Button>  
       </Link>

@@ -30,8 +30,7 @@ export default function Page() {
   const [avgCat1, setAvgCat1] = useState(0);
   const [avgCat2, setAvgCat2] = useState(0);
   const [avgCat3, setAvgCat3] = useState(0);
-  const [avg, setAvg] = useState(0);
-
+  
   const [showFinalPage, setShowFinalPage] = useState(false);
   const [insertData, setInsertData] = useState(false);
 
@@ -103,7 +102,7 @@ export default function Page() {
 
   const insertDataToDatabase = async () => {
     try {
-
+      console.log("1", avgCat1, avgCat2, avgCat3)
       const response = await fetch('/api/insertData', {
         method: 'POST',
         headers: {
@@ -165,7 +164,7 @@ export default function Page() {
               <h2>Category 1 point: {avgCat1}</h2>
               <h2>Category 2 point: {avgCat2}</h2>
               <h2>Category 3 point: {avgCat3}</h2>
-              <h2>Average point: {avg}</h2>
+     
               <button onClick={insertDataToDatabase}>Submit</button>
             </div>
           )}

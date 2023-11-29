@@ -3,10 +3,10 @@ import { useState, ChangeEvent, SetStateAction } from 'react';
 
 interface UserData {
   id: string;
-  cat1: string;
-  cat2: string;
-  cat3: string;
-  avg: string;
+  cat1: number;
+  cat2: number;
+  cat3: number;
+  avg: number;
 }
 
 export default function SeeResult() {
@@ -22,6 +22,7 @@ export default function SeeResult() {
     try {
       const userResponse = await fetch('/api/users', { cache: 'no-cache' });
       const userData = await userResponse.json();
+      console.log(userData);
       setUserData(userData);
       setError(null); // Clear any previous errors on successful fetch
     } catch (error: any) {

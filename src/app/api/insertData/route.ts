@@ -3,13 +3,6 @@ import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { NextResponse } from 'next/server';
 
-interface users {
-  user_id: string;
-  cat1: number;
-  cat2: number;
-  cat3: number;
-  avg: number;
-}
 export const runtime = 'edge';
 
 export const POST = async (req: Request) => {
@@ -32,7 +25,7 @@ export const POST = async (req: Request) => {
       cat2: cat2Value,
       cat3: cat3Value,
       avg: cat1Value + cat2Value + cat3Value,
-    } as users);
+    });
 
     return NextResponse.json({ message: 'Data inserted successfully.' });
   } catch (error: any) {

@@ -17,7 +17,7 @@ export const POST = async (req: Request) => {
     const body = await req.json();
     const { userId }: { userId: any } = await auth();
 
-    const { avgCat1, avgCat2, avgCat3 }: { avgCat1: number; avgCat2: number; avgCat3: number } = body;
+    const { avgCat1, avgCat2, avgCat3 }: { avgCat1: any; avgCat2: any; avgCat3: any } = body;
     console.log(body)
     console.log("2", typeof avgCat1, avgCat2, avgCat3)
     // Insert the values into the "users" table
@@ -28,10 +28,10 @@ export const POST = async (req: Request) => {
     // Insert the values into the "users" table
     await db.insert(users).values({
       user_id: userId,
-      cat1: Number(cat1Value),
-      cat2: Number(cat2Value),
-      cat3: Number(cat3Value),
-      avg: Number(cat1Value + cat2Value + cat3Value),
+      cat1: cat1Value,
+      cat2: cat2Value,
+      cat3: cat3Value,
+      avg: cat1Value + cat2Value + cat3Value,
     } as users);
 
     return NextResponse.json({ message: 'Data inserted successfully.' });

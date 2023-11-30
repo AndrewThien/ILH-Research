@@ -26,7 +26,7 @@ export default function Page() {
   const [sumCat3, setSumCat3] = useState(0);
   const [countCat1, setCountCat1] = useState(0);
   const [countCat2, setCountCat2] = useState(0);
-  const [countCat3, setCountCat3] = useState(1);
+  const [countCat3, setCountCat3] = useState(0);
   const [avgCat1, setAvgCat1] = useState(0);
   const [avgCat2, setAvgCat2] = useState(0);
   const [avgCat3, setAvgCat3] = useState(0);
@@ -62,22 +62,43 @@ export default function Page() {
 
   const handleNextQuestion = (index: number) => {
     // Check if an answer is selected before proceeding to the next question
-    if (selectedAnswerIndex !== 10) {
+    if (selectedAnswerIndex >= 0) {
       // Get the selected choice
       const selectedChoice = choices.filter((choice) => choice.question_id === currentQuestion.id)[index];
         // Update the sum variables based on the category
       if (currentCategory === 1) {
-        setSumCat1((prevSum) => Number(prevSum) + Number(selectedChoice.score));
-        setCountCat1((prevCount) => Number(prevCount) + 1);
-        console.log(sumCat1, countCat1)
+        setSumCat1((prevSum) => {
+          const newSum = Number(prevSum) + Number(selectedChoice.score);
+          console.log(newSum, countCat1);
+          return newSum;
+        });
+        setCountCat1((prevCount) => {
+          const newCount = Number(prevCount) + 1;
+          console.log(sumCat1, newCount);
+          return newCount;
+        });
       } else if (currentCategory === 2) {
-        setSumCat2((prevSum) => Number(prevSum) + Number(selectedChoice.score));
-        setCountCat2((prevCount) => Number(prevCount) + 1);
-        console.log(sumCat2, countCat2)
+        setSumCat2((prevSum) => {
+          const newSum = Number(prevSum) + Number(selectedChoice.score);
+          console.log(newSum, countCat2);
+          return newSum;
+        });
+        setCountCat2((prevCount) => {
+          const newCount = Number(prevCount) + 1;
+          console.log(sumCat2, newCount);
+          return newCount;
+        });
       } else if (currentCategory === 3) {
-        setSumCat3((prevSum) => Number(prevSum) + Number(selectedChoice.score));
-        setCountCat3((prevCount) => Number(prevCount) + 1);
-        console.log(sumCat3, countCat3)
+        setSumCat3((prevSum) => {
+          const newSum = Number(prevSum) + Number(selectedChoice.score);
+          console.log(newSum, countCat3);
+          return newSum;
+        });
+        setCountCat3((prevCount) => {
+          const newCount = Number(prevCount) + 1;
+          console.log(sumCat3, newCount);
+          return newCount;
+        });
       }
       // Update state to move to the next question
       if (activeQuestion !== questions.length - 1) {

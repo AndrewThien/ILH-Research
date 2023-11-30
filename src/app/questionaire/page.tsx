@@ -89,7 +89,7 @@ export default function Page() {
   const currentCategory = currentQuestion.category;
   const currentChoices = choices?.filter(choice => choice.question_id === currentQuestion.id);
 
-  const handleNextQuestion = (index: number) => {
+  const handleNextQuestion = (index: number | null) => {
     // Check if an answer is selected before proceeding to the next question
     if (selectedAnswerIndex !== null) {
       // Get the selected choice

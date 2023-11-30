@@ -17,6 +17,7 @@ function LoadingPage() {
         </div>
 </div>
 }
+
 export default function Page() {
   interface Choice {
     question_id: number;
@@ -33,7 +34,7 @@ export default function Page() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [choices, setChoices] = useState<Choice[]>([]);
   const [activeQuestion, setActiveQuestion] = useState(0);
-  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number>(0);
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
   const [sumCat1, setSumCat1] = useState(0);
   const [sumCat2, setSumCat2] = useState(0);
   const [sumCat3, setSumCat3] = useState(0);
@@ -77,7 +78,7 @@ export default function Page() {
   }, [activeQuestion, questions.length, sumCat1, countCat1, sumCat2, countCat2, sumCat3, countCat3]);
 
   if (loading) {
-    return LoadingPage();
+    return <LoadingPage />;
   }
   const currentQuestion = questions[activeQuestion];
   const currentCategory = currentQuestion.category;
@@ -85,7 +86,7 @@ export default function Page() {
 
   const handleNextQuestion = (index: number) => {
     // Check if an answer is selected before proceeding to the next question
-    if (selectedAnswerIndex >= 0) {
+    if (selectedAnswerIndex !== null) {
       // Get the selected choice
       const selectedChoice = choices.filter((choice) => choice.question_id === currentQuestion.id)[index];
         // Update the sum variables based on the category
@@ -111,7 +112,7 @@ export default function Page() {
         setShowFinalPage(true);
       }
       // Reset selected answer for the new question
-      setSelectedAnswerIndex(0);
+      setSelectedAnswerIndex(null);
     } else {
       toast.error('Please select an answer before moving to the next question.');
     }

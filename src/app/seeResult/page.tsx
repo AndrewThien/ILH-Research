@@ -49,7 +49,7 @@ export default function SeeResult() {
       <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
       <div className='flex flex-col items-center text-center'>
       <h1 className="mr-3 mb-5 text-4xl font-semibold">Research Report</h1>
-      <h2 className="mr-3 mb-5 text-xl">Please enter the admin's password to access the report</h2>
+      <h2 className="mr-3 mb-5 text-xl">Please enter the password to access the report</h2>
       <div>
         <label>Password: </label>
         <input type="password" value={password} onChange={handlePasswordChange} />
@@ -65,7 +65,7 @@ export default function SeeResult() {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>Participant's ID</th>
+                <th>Participant ID</th>
                 <th>Category 1</th>
                 <th>Category 2</th>
                 <th>Category 3</th>

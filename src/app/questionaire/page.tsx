@@ -93,7 +93,7 @@ export default function Page() {
     // Check if an answer is selected before proceeding to the next question
     if (selectedAnswerIndex !== null) {
       // Get the selected choice
-      const selectedChoice = choices.filter((choice) => choice.question_id === currentQuestion.id)[index];
+      const selectedChoice = choices.filter((choice) => choice.question_id === currentQuestion.id)[selectedAnswerIndex];
         // Update the sum variables based on the category
         if (currentCategory === 1) {
           setSumCat1((prevSum) => Number(prevSum) + Number(selectedChoice.score));

@@ -1,8 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { questions, choices, users } from "@/lib/db/schema";
-import { Loader2 } from 'lucide-react';
-
+import { Home, RotateCcw, Loader2, Send, ArrowBigLeftDash, ArrowBigRightDash } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from "next/link";
 
 export default function Page() {
   interface Choice {
@@ -30,7 +31,8 @@ export default function Page() {
   const [avgCat1, setAvgCat1] = useState(0);
   const [avgCat2, setAvgCat2] = useState(0);
   const [avgCat3, setAvgCat3] = useState(0);
-  
+  const [answeredScore, setSelectedAnswerScore] = useState(0);
+
   const [showFinalPage, setShowFinalPage] = useState(false);
   const [insertData, setInsertData] = useState(false);
 
@@ -54,7 +56,6 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    console.log(activeQuestion, questions.length);
     if (showFinalPage) {
       setActiveQuestion(0);
       setAvgCat1(sumCat1 / countCat1 || 0);
@@ -64,7 +65,7 @@ export default function Page() {
   }, [activeQuestion, questions.length, sumCat1, countCat1, sumCat2, countCat2, sumCat3, countCat3]);
 
   if (loading) {
-    return <Loader2 className='spin' />;
+    return <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />;
   }
   const currentQuestion = questions[activeQuestion];
   const currentCategory = currentQuestion.category;
@@ -78,12 +79,15 @@ export default function Page() {
         // Update the sum variables based on the category
         if (currentCategory === 1) {
           setSumCat1((prevSum) => Number(prevSum) + Number(selectedChoice.score));
+          setSelectedAnswerScore((prevScore) => selectedChoice.score)
           setCountCat1((prevCount) => Number(prevCount) + 1);
         } else if (currentCategory === 2) {
           setSumCat2((prevSum) => Number(prevSum) + Number(selectedChoice.score));
+          setSelectedAnswerScore((prevScore) => selectedChoice.score)
           setCountCat2((prevCount) => Number(prevCount) + 1);
         } else if (currentCategory === 3) {
           setSumCat3((prevSum) => Number(prevSum) + Number(selectedChoice.score));
+          setSelectedAnswerScore((prevScore) => selectedChoice.score)
           setCountCat3((prevCount) => Number(prevCount) + 1);
         }
       // Update state to move to the next question
@@ -103,15 +107,34 @@ export default function Page() {
   };
 
 
-
   const handleAnswerSelection = (index: number) => {
       // Get the current question and its category  
     setSelectedAnswerIndex(index);
   };
 
+  const handlePreviousQuestion = () => {
+    // Check if there's a previous question to go back to
+    if (activeQuestion > 0) {
+      // Update the state to move to the previous question
+      setActiveQuestion((prev) => prev - 1);
+      // Update the sum variables based on the category (subtracting instead of adding)
+      if (currentCategory === 1) {
+        setSumCat1((prevSum) => Number(prevSum) - Number(answeredScore));
+        setCountCat1((prevCount) => Number(prevCount) - 1);
+      } else if (currentCategory === 2) {
+        setSumCat2((prevSum) => Number(prevSum) - Number(answeredScore));
+        setCountCat2((prevCount) => Number(prevCount) - 1);
+      } else if (currentCategory === 3) {
+        setSumCat3((prevSum) => Number(prevSum) - Number(answeredScore));
+        setCountCat3((prevCount) => Number(prevCount) - 1);
+      }
+    } else {
+      console.log('Cannot go back further. This is the first question.');
+    }
+  };
+
   const insertDataToDatabase = async () => {
     try {
-      console.log("1", avgCat1, avgCat2, avgCat3)
       const response = await fetch('/api/insertData', {
         method: 'POST',
         headers: {
@@ -144,37 +167,59 @@ export default function Page() {
         <div className="flex flex-col items-center text-center">
           {!showFinalPage ? (
             <>
-              <h1>Questionnaire</h1>
+            <div className="items-center text-xl gap-2 mb-5 ml-2">
+              <h1 className='underline text-2xl'>Research Questionnaire</h1>
               <h2>
                 Question: {activeQuestion + 1}
                 <span>/{questions.length}</span>
               </h2>
+              </div>
+              <div className='text-2xl text-slate-950 gap-2 mb-5 ml-2'>
               <p>{currentQuestion.questions}</p>
-              <div>
+              </div>
+              <div className='text-xl text-slate-950 gap-2 mb-5 ml-2'>
                 {choices.length > 0 &&
                   currentChoices.map((choice, index) => (
-                    <div key={index}>
+                    <div key={index} className="flex items-center mb-2">
                       <input
                         type="radio"
                         id={`choice${index}`}
                         name="choices"
                         checked={selectedAnswerIndex === index}
                         onChange={() => handleAnswerSelection(index)}
+                        style={{ transform: 'scale(1.3)' }}
                       />
-                      <label htmlFor={`choice${index}`}>{choice.choice}</label>
+                      <label htmlFor={`choice${index}`} className="ml-2">{choice.choice}</label>
                     </div>
                   ))}
               </div>
-              <button onClick={() => handleNextQuestion(selectedAnswerIndex)}>Next</button>
+              <div className='flex ml-5 gap-2 mb-3'>
+              <Button onClick={handlePreviousQuestion} > <ArrowBigLeftDash className="mr-2" /> Previous </Button>
+              <Button onClick={() => handleNextQuestion(selectedAnswerIndex)}>Next <ArrowBigRightDash className="ml-2" /></Button>
+              </div>
+              <div>
+                
+                <Link href='/'>
+                <Button className="mr-2">Home <Home className="ml-2" /></Button>
+                </Link>
+                <Link href='questionaire'>
+                <Button> Restart <RotateCcw className="ml-2" /></Button>
+                </Link>
+              </div>
             </>
           ): ( 
-            <div>
+            <div className='items-center text-xl gap-2 mb-5 ml-2'>
               
-              <h2>Category 1 point: {avgCat1}</h2>
-              <h2>Category 2 point: {avgCat2}</h2>
-              <h2>Category 3 point: {avgCat3}</h2>
-     
-              <button onClick={insertDataToDatabase}>Submit</button>
+              <h1>Many thanks for answering my questionnaire</h1>
+              <h1>Please click Submit button to send your answer. Otherwise, you can re-do the questionnaire again</h1>
+              <div className='flex mt-5 gap-5 justify-center'>
+              <Link href='questionaire'>
+                <Button> Restart <RotateCcw className="ml-2" /></Button>
+                </Link>
+              <Link href='/'>
+              <Button onClick={insertDataToDatabase}>Submit <Send className="ml-2" /></Button>
+              </Link>
+            </div>
             </div>
           )}
         </div>

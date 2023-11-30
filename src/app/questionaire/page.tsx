@@ -69,34 +69,34 @@ export default function Page() {
       if (currentCategory === 1) {
         setSumCat1((prevSum) => {
           const newSum = Number(prevSum) + Number(selectedChoice.score);
-          console.log(newSum, countCat1);
+          console.log("1", newSum);
           return newSum;
         });
         setCountCat1((prevCount) => {
           const newCount = Number(prevCount) + 1;
-          console.log(sumCat1, newCount);
+          console.log("1", newCount);
           return newCount;
         });
       } else if (currentCategory === 2) {
         setSumCat2((prevSum) => {
           const newSum = Number(prevSum) + Number(selectedChoice.score);
-          console.log(newSum, countCat2);
+          console.log("2", newSum);
           return newSum;
         });
         setCountCat2((prevCount) => {
           const newCount = Number(prevCount) + 1;
-          console.log(sumCat2, newCount);
+          console.log("2", newCount);
           return newCount;
         });
       } else if (currentCategory === 3) {
         setSumCat3((prevSum) => {
           const newSum = Number(prevSum) + Number(selectedChoice.score);
-          console.log(newSum, countCat3);
+          console.log("3", newSum);
           return newSum;
         });
         setCountCat3((prevCount) => {
           const newCount = Number(prevCount) + 1;
-          console.log(sumCat3, newCount);
+          console.log("3", newCount);
           return newCount;
         });
       }

@@ -52,7 +52,17 @@ export default function Page() {
 
     fetchData();
   }, []);
-  
+
+  useEffect(() => {
+    console.log(activeQuestion, questions.length);
+    if (showFinalPage) {
+      setActiveQuestion(0);
+      setAvgCat1(sumCat1 / countCat1 || 0);
+      setAvgCat2(sumCat2 / countCat2 || 0); 
+      setAvgCat3(sumCat3 / countCat3 || 0);
+    } 
+  }, [activeQuestion, questions.length, sumCat1, countCat1, sumCat2, countCat2, sumCat3, countCat3]);
+
   if (loading) {
     return <Loader2 className='spin' />;
   }
@@ -66,59 +76,33 @@ export default function Page() {
       // Get the selected choice
       const selectedChoice = choices.filter((choice) => choice.question_id === currentQuestion.id)[index];
         // Update the sum variables based on the category
-      if (currentCategory === 1) {
-        setSumCat1((prevSum) => {
-          const newSum = Number(prevSum) + Number(selectedChoice.score);
-          console.log("1", newSum);
-          return newSum;
-        });
-        setCountCat1((prevCount) => {
-          const newCount = Number(prevCount) + 1;
-          console.log("1", newCount);
-          return newCount;
-        });
-      } else if (currentCategory === 2) {
-        setSumCat2((prevSum) => {
-          const newSum = Number(prevSum) + Number(selectedChoice.score);
-          console.log("2", newSum);
-          return newSum;
-        });
-        setCountCat2((prevCount) => {
-          const newCount = Number(prevCount) + 1;
-          console.log("2", newCount);
-          return newCount;
-        });
-      } else if (currentCategory === 3) {
-        setSumCat3((prevSum) => {
-          const newSum = Number(prevSum) + Number(selectedChoice.score);
-          console.log("3", newSum);
-          return newSum;
-        });
-        setCountCat3((prevCount) => {
-          const newCount = Number(prevCount) + 1;
-          console.log("3", newCount);
-          return newCount;
-        });
-      }
+        if (currentCategory === 1) {
+          setSumCat1((prevSum) => Number(prevSum) + Number(selectedChoice.score));
+          setCountCat1((prevCount) => Number(prevCount) + 1);
+        } else if (currentCategory === 2) {
+          setSumCat2((prevSum) => Number(prevSum) + Number(selectedChoice.score));
+          setCountCat2((prevCount) => Number(prevCount) + 1);
+        } else if (currentCategory === 3) {
+          setSumCat3((prevSum) => Number(prevSum) + Number(selectedChoice.score));
+          setCountCat3((prevCount) => Number(prevCount) + 1);
+        }
       // Update state to move to the next question
       if (activeQuestion !== questions.length - 1) {
         setActiveQuestion((prev) => prev + 1);
-      } else {
-        setActiveQuestion(0);
-        setAvgCat1(sumCat1 / countCat1 ?? 0);
-        setAvgCat2(sumCat2 / countCat2 ?? 0);
-        setAvgCat3(sumCat3 / countCat3 ?? 0);
-        console.log(countCat1, countCat2, countCat3, sumCat1, sumCat2, sumCat3)
-        setShowFinalPage(true);   
+      } 
+
+      if (activeQuestion === questions.length -1) {
+        setShowFinalPage(true);
       }
       // Reset selected answer for the new question
       setSelectedAnswerIndex(0);
-      
     } else {
       // Provide some feedback to the user (e.g., show an error message)
       console.log('Please select an answer before moving to the next question.');
     }
   };
+
+
 
   const handleAnswerSelection = (index: number) => {
       // Get the current question and its category  

@@ -4,7 +4,19 @@ import { questions, choices, users } from "@/lib/db/schema";
 import { Home, RotateCcw, Loader2, Send, ArrowBigLeftDash, ArrowBigRightDash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from "next/link";
+import toast from "react-hot-toast";
 
+function LoadingPage() {
+<div>
+<div className="w-screen min-h-screen bg-gradient-to-r from-green-300 via-blue-500 to-purple-600">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="flex flex-col items-center text-center">
+          <h1>Questions are loading</h1>
+        </div>
+        </div>
+        </div>
+</div>
+}
 export default function Page() {
   interface Choice {
     question_id: number;
@@ -65,7 +77,7 @@ export default function Page() {
   }, [activeQuestion, questions.length, sumCat1, countCat1, sumCat2, countCat2, sumCat3, countCat3]);
 
   if (loading) {
-    return <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />;
+    return LoadingPage();
   }
   const currentQuestion = questions[activeQuestion];
   const currentCategory = currentQuestion.category;
@@ -101,8 +113,7 @@ export default function Page() {
       // Reset selected answer for the new question
       setSelectedAnswerIndex(0);
     } else {
-      // Provide some feedback to the user (e.g., show an error message)
-      console.log('Please select an answer before moving to the next question.');
+      toast.error('Please select an answer before moving to the next question.');
     }
   };
 
@@ -129,7 +140,7 @@ export default function Page() {
         setCountCat3((prevCount) => Number(prevCount) - 1);
       }
     } else {
-      console.log('Cannot go back further. This is the first question.');
+      toast.error('Cannot go back further. This is the first question.');
     }
   };
 
@@ -158,8 +169,6 @@ export default function Page() {
     }  
   }
       
-
-
   return (
     <div>
     <div className="w-screen min-h-screen bg-gradient-to-r from-green-300 via-blue-500 to-purple-600">
@@ -193,18 +202,19 @@ export default function Page() {
                     </div>
                   ))}
               </div>
-              <div className='flex ml-5 gap-2 mb-3'>
+              <div>
+              <div className='flex ml-5 gap-1 mb-3'>
               <Button onClick={handlePreviousQuestion} > <ArrowBigLeftDash className="mr-2" /> Previous </Button>
               <Button onClick={() => handleNextQuestion(selectedAnswerIndex)}>Next <ArrowBigRightDash className="ml-2" /></Button>
               </div>
               <div>
-                
                 <Link href='/'>
-                <Button className="mr-2">Home <Home className="ml-2" /></Button>
+                <Button className="mr-1">Home <Home className="ml-2" /></Button>
                 </Link>
                 <Link href='questionaire'>
                 <Button> Restart <RotateCcw className="ml-2" /></Button>
                 </Link>
+              </div>
               </div>
             </>
           ): ( 

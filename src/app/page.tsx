@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import {FileCheck } from 'lucide-react'
+import {FileCheck, LogIn, PlayCircle } from 'lucide-react'
 import { UserButton } from "@clerk/nextjs";
 import { auth, currentUser } from "@clerk/nextjs";
-import { LogIn } from "lucide-react";
 import { checkUser } from '@/lib/checkExistedUser';
 
 export default async function Home() {
@@ -46,7 +45,8 @@ export default async function Home() {
 
               {isAuth && !answered  && (
                 <Link href="/questionaire">
-                  <Button>Get started here</Button>  
+                  <Button>Get started here <PlayCircle className='ml-2'/>
+                  </Button>  
                 </Link>
               )}
 

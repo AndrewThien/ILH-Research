@@ -5,6 +5,10 @@ import { Home, Webhook } from 'lucide-react';
 import Link from 'next/link';
 import styles from '@/app/SeeResult.module.css';
 import toast from "react-hot-toast";
+import { Bar } from 'react-chartjs-2';
+import { Chart, registerables} from 'chart.js';
+
+Chart.register(...registerables);
 
 interface UserData {
   id: string;
@@ -43,13 +47,69 @@ export default function SeeResult() {
     }
   };
 
+  const chartData = {
+    labels: userData ? userData.map(user => user.id) : [],
+    datasets: [
+      {
+        label: 'Category 1',
+        backgroundColor: 'rgba(75,192,192,0.2)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderWidth: 1,
+        data: userData ? userData.map(user => user.cat1) : [],
+      },
+      {
+        label: 'Category 2',
+        backgroundColor: 'rgba(255,99,132,0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        borderWidth: 1,
+        data: userData ? userData.map(user => user.cat2) : [],
+      },
+      {
+        label: 'Category 3',
+        backgroundColor: 'rgba(255,206,86,0.2)',
+        borderColor: 'rgba(255,206,86,1)',
+        borderWidth: 1,
+        data: userData ? userData.map(user => user.cat3) : [],
+      },
+      {
+        label: 'Overall point',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+        data: userData ? userData.map(user => user.avg) : [],
+      },
+    ],
+  };
+
+  const chartOptions = {
+    scales: {
+      x: {
+        type: 'category',
+        labels: userData ? userData.map(user => user.id) : [],
+        title: {
+          display: true,
+          text: 'Participant ID',
+        },
+      },
+      y: {
+        type: 'linear',
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Values',
+        },
+      },
+    },
+  };
+
   return (
-    <div>
-      <div className="w-screen min-h-screen bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 ">
+    <div style={{ height: '100vh', overflowY: 'auto' }}>
+      <div>
+      <div className="w-screen min-h-screen bg-gradient-to-b from-sky-400 to-sky-200">
       <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
       <div className='flex flex-col items-center text-center'>
-      <h1 className="mr-3 mb-5 text-4xl font-semibold">Research Report</h1>
-      <h2 className="mr-3 mb-5 text-xl">Please enter the password to access the report</h2>
+      <h1 className="mb-1 text-3xl font-semibold">Research Report</h1>
+      <h2 className="mb-2 text-xl">Please enter the password to access the report</h2>
       <div>
         <label>Password: </label>
         <input type="password" value={password} onChange={handlePasswordChange} />
@@ -62,30 +122,33 @@ export default function SeeResult() {
       </div>
       {userData && (
         <div>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Participant ID</th>
-                <th>Category 1</th>
-                <th>Category 2</th>
-                <th>Category 3</th>
-                <th>Overall point</th>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Participant ID</th>
+              <th>Category 1</th>
+              <th>Category 2</th>
+              <th>Category 3</th>
+              <th>Overall point</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userData.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.cat1}</td>
+                <td>{user.cat2}</td>
+                <td>{user.cat3}</td>
+                <td>{user.avg}</td>
               </tr>
-            </thead>
-            <tbody>
-              {userData.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.cat1}</td>
-                  <td>{user.cat2}</td>
-                  <td>{user.cat3}</td>
-                  <td>{user.avg}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            ))}
+          </tbody>
+        </table>
+        <h2 className="mt-2 text-xl">Data in Bar chart (Hover to see the value)</h2>
+        <Bar data={chartData} options={chartOptions} />
         </div>
       )}
+    </div>
     </div>
     </div>
     </div>

@@ -15,7 +15,7 @@ export default async function Home() {
 
 
   return (
-    <div className="w-screen min-h-screen bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 ">
+    <div className="w-screen min-h-screen bg-gradient-to-b from-sky-400 to-sky-200 ">
       <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
         <div className='flex flex-col items-center text-center'>
         <h1 className="mr-3 mb-5 text-4xl font-semibold">Involvement Load Hypothesis</h1>

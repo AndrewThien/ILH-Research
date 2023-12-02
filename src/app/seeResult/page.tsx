@@ -6,7 +6,7 @@ import Link from 'next/link';
 import styles from '@/app/SeeResult.module.css';
 import toast from "react-hot-toast";
 import { Bar } from 'react-chartjs-2';
-import { Chart, registerables} from 'chart.js';
+import { Chart, registerables, ChartOptions} from 'chart.js';
 
 Chart.register(...registerables);
 
@@ -81,7 +81,7 @@ export default function SeeResult() {
     ],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'bar'> = {
     scales: {
       x: {
         type: 'category',

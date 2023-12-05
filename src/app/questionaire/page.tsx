@@ -53,6 +53,7 @@ export default function Page() {
 
   const [showFinalPage, setShowFinalPage] = useState(false);
   const [insertData, setInsertData] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -164,14 +165,14 @@ export default function Page() {
         }),
       });
 
-      const data = await response.json();
-      console.log(data);
-      if (!response.ok) {
-        throw new Error('Error inserting data'); 
+      if (response.ok) {
+        toast.success('Data sent succesfully');
+        setSubmitted(true);
       }
   
     } catch (error: any) {
       console.error('Error inserting data:', error.message);
+      toast.error('Error inserting data');
     }  
   }
       
@@ -232,9 +233,15 @@ export default function Page() {
               <Link href='questionaire'>
                 <Button> Restart <RotateCcw className="ml-2" /></Button>
                 </Link>
-              <Link href='/'>
-              <Button onClick={insertDataToDatabase}>Submit <Send className="ml-2" /></Button>
-              </Link>
+
+                {submitted ? (
+                // Render the "Home" button after submission
+                <Link href='/'>
+                  <Button>Home <Home className="ml-2" /></Button>
+                </Link>
+                  ) : (
+                  <Button onClick={insertDataToDatabase}>Submit <Send className="ml-2" /></Button>
+                )}
             </div>
             </div>
           )}

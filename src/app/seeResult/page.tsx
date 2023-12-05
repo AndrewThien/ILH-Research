@@ -51,28 +51,28 @@ export default function SeeResult() {
     labels: userData ? userData.map(user => user.id) : [],
     datasets: [
       {
-        label: 'Category 1',
+        label: 'Need',
         backgroundColor: 'rgba(75,192,192,0.2)',
         borderColor: 'rgba(75,192,192,1)',
         borderWidth: 1,
         data: userData ? userData.map(user => user.cat1) : [],
       },
       {
-        label: 'Category 2',
+        label: 'Search',
         backgroundColor: 'rgba(255,99,132,0.2)',
         borderColor: 'rgba(255,99,132,1)',
         borderWidth: 1,
         data: userData ? userData.map(user => user.cat2) : [],
       },
       {
-        label: 'Category 3',
+        label: 'Evaluation',
         backgroundColor: 'rgba(255,206,86,0.2)',
         borderColor: 'rgba(255,206,86,1)',
         borderWidth: 1,
         data: userData ? userData.map(user => user.cat3) : [],
       },
       {
-        label: 'Overall point',
+        label: 'Overall ILH score',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
@@ -126,10 +126,10 @@ export default function SeeResult() {
           <thead>
             <tr>
               <th>Participant ID</th>
-              <th>Category 1</th>
-              <th>Category 2</th>
-              <th>Category 3</th>
-              <th>Overall point</th>
+              <th>Need</th>
+              <th>Search</th>
+              <th>Evaluation 3</th>
+              <th>Overall ILH score</th>
             </tr>
           </thead>
           <tbody>

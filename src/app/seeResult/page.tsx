@@ -109,7 +109,8 @@ export default function SeeResult() {
       <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
       <div className='flex flex-col items-center text-center'>
       <h1 className="mb-1 text-3xl font-semibold">Research Report</h1>
-      <h2 className="mb-2 text-xl">Please enter the password to access the report</h2>
+      <h2 className="mb-1 text-xl">Please enter the password to access the report</h2>
+      <h2 className="mb-2 text-sm">Note: Password is 12345 (for demonstration purpose)</h2>
       <div>
         <label>Password: </label>
         <input type="password" value={password} onChange={handlePasswordChange} />
@@ -118,7 +119,7 @@ export default function SeeResult() {
       <Link href='/'>
       <Button className='mt-2 mr-3'>Home <Home className="ml-2" /></Button>
       </Link>
-      <Button className='mt-2' onClick={handlePasswordSubmit}>Access Report <Webhook className="ml-2" /></Button>
+      <Button className='mt-2' onClick={handlePasswordSubmit}>Submit Password <Webhook className="ml-2" /></Button>
       </div>
       {userData && (
         <div>
@@ -128,7 +129,7 @@ export default function SeeResult() {
               <th>Participant ID</th>
               <th>Need</th>
               <th>Search</th>
-              <th>Evaluation 3</th>
+              <th>Evaluation</th>
               <th>Overall ILH score</th>
             </tr>
           </thead>

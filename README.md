@@ -2,7 +2,7 @@
 
 This application is a research questionnaire to measure the effectiveness of vocabulary learning methods based on the Involvement Load Hypothesis (ILH) principles.
 
-It allows researchers to easily create ILH questionnaires, distribute them globally, and analyze results through interactive data visualizations.
+It allows users to take a research questionnaire easily and researchers to effortlessly create ILH questionnaires, distribute them globally, and analyze results through interactive data visualizations.
 
 ## Overview
 The ILH theory posits vocabulary learning is more effective when it incorporates a higher involvement load - i.e. need, search, and evaluation.
@@ -48,10 +48,6 @@ https://ilh-research.vercel.app/
 
 Try it out by logging in, taking a short questionnaire and seeing the results!
 
-## Hosting
-ChatPDF is currently hosted on Vercel and leverages its serverless platform for scale, speed, and ease of use. The front-end application is hosted on Vercel Edge locations around the world to minimize latency. PDF documents are stored in AWS S3 buckets in relevant regions.
-
-The UI is a progressive web app that caches content like App Shell architecture. Pages render extremely quickly even for complex pages due to granular caching and static optimization.
 
 ## Table of Contents
 ### 1. [Installation](#installation)
@@ -83,6 +79,7 @@ The UI is a progressive web app that caches content like App Shell architecture.
 - TypeScript + React
 - Tailwind CSS styling
 - Vercel hosting
+- Neon PostgreSQL database
 - Recharts for data visualization
 
 ## Contributing <a name="contributing"/>

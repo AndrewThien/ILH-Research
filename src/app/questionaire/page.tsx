@@ -230,17 +230,19 @@ export default function Page() {
               <h1>Many thanks for answering my questionnaire</h1>
               <h1>Please click Submit button to send your answer. Otherwise, you can re-do the questionnaire again</h1>
               <div className='flex mt-5 gap-5 justify-center'>
-              <Link href='questionaire'>
-                <Button> Restart <RotateCcw className="ml-2" /></Button>
-                </Link>
-
+                        
                 {submitted ? (
                 // Render the "Home" button after submission
                 <Link href='/'>
                   <Button>Home <Home className="ml-2" /></Button>
                 </Link>
                   ) : (
+                    <>
+                    <Link href='questionaire'>
+                    <Button> Restart <RotateCcw className="ml-2" /></Button>
+                    </Link> 
                   <Button onClick={insertDataToDatabase}>Submit <Send className="ml-2" /></Button>
+                  </>
                 )}
             </div>
             </div>

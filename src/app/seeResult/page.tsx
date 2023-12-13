@@ -33,7 +33,7 @@ export default function SeeResult() {
       setUserData(userData);
     } catch (error: any) {
       console.error('Error getting user data:', error.message);
-      toast.error('Incorrect password. Please try again.');
+      toast.error('Error getting user data');
     }
   };
 
